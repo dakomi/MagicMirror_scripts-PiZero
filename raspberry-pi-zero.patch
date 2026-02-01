@@ -1,0 +1,60 @@
+--- raspberry.sh.orig	2026-01-21 00:00:00.000000000 +1000
++++ raspberry.sh	2026-01-21 00:00:00.000000000 +1000
+@@ -10,7 +10,14 @@
+ # and then
+ download and run MagicMirror2.
+ 
+ if [ $USER == 'root' ]; then
+ 	 echo Please login as a user to execute the MagicMirror installation,  not root
+ 	 exit 1
+ fi
+-NODE_OPTIONS=--max_old_space_size=4096
++
++# Detect low-memory devices and set appropriate limits
++if [ $(free -m 2>/dev/null | grep Mem | awk '{print $2}') -le 512 ]; then
++    NODE_OPTIONS=--max_old_space_size=192
++else
++    NODE_OPTIONS=--max_old_space_size=4096
++fi
+ 
+@@ -568,8 +575,13 @@
+ 	# if one of the
+ 	# if not
+ 	if [ $npminstalled == $false ]; then
+ 		# Check
+ 	if we need to install or upgrade Node.js.
+ 		echo -e "\e[96mCheck current Node
+ 	installation ...\e[0m" | tee -a $logfile
++		
++		# Apply memory constraints for npm operations on low-RAM devices
++		if [ $(free -m 2>/dev/null | grep Mem | awk '{print $2}') -le 512 ]; then
++			export npm_config_jobs=${npm_config_jobs:-1}
++			export npm_config_maxsockets=${npm_config_maxsockets:-1}
++		fi
++		
+ 		NODE_INSTALL=false
+ 		if command_exists node; then
+@@ -700,8 +712,15 @@
+ 	# get just the major version  number.. watch out for single or double digits
+ 	# remove the
+ 	leading V
+ 	TEMPV=${NPM_CURRENT:1}
+@@ -720,7 +739,7 @@
+ 	rm
+ 	package-lock.json 2>/dev/null
+ 	npm_i_r=$(LC_ALL=C  npm  $forced_arch $Justprod --omit=dev
+-$NODE_OPTIONS install)
++$NODE_OPTIONS --no-audit --no-fund --prefer-offline install)
+     npm_i_rc=$?
+     # add the npm install messages to the
+ 	logfile
+   	echo $npm_i_r >> $logfile
+@@ -850,7 +869,7 @@
+ 			if [[ $arch == a* ]]; then
+ 				if [ -e /etc/dphys-swapfile ]; then
+ 					echo "increasing swap space" >>$logfile
+-					export NODE_OPTIONS="--max-old-space-size=1024"
++					export NODE_OPTIONS="--max-old-space-size=192"
+ 					# if the old swap control file exists
+ 					if [ -e /etc/dphys-swapfile ]; then
+ 						echo "increasing swap space" >>$logfile
