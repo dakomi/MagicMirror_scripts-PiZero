@@ -1,0 +1,40 @@
+--- upgrade-script.sh.orig	2026-01-21 00:00:00.000000000 +1000
++++ upgrade-script.sh	2026-01-21 00:00:00.000000000 +1000
+@@ -35,7 +35,14 @@
+ known_list="request valid-url jsdom node-fetch digest-fetch"
+ JustProd="--only=prod"
+ switched=""
+-NODE_OPTIONS=--max_old_space_size=4096
++
++# Detect low-memory devices and set appropriate limits
++if [ $(free -m 2>/dev/null | grep Mem | awk '{print $2}') -le 512 ]; then
++    NODE_OPTIONS=--max_old_space_size=192
++else
++    NODE_OPTIONS=--max_old_space_size=4096
++fi
++
+ remote_user=MagicMirrorOrg
+ repo=master
+ #echo $testmode
+@@ -727,6 +734,12 @@
+ 		NPM_MAJOR=$(echo ${NPM_MAJOR[0]} | awk '{$1=$1};1')
+ 		# compare
+ 		if [ $NPM_MAJOR -ge 8 ]; then
++			# Constrain npm concurrency on low-RAM devices
++			if [ $(free -m 2>/dev/null | grep Mem | awk '{print $2}') -le 512 ]; then
++				export npm_config_jobs=${npm_config_jobs:-1}
++				export npm_config_maxsockets=${npm_config_maxsockets:-1}
++			fi
++			
+ 			JustProd="--no-audit --no-fund --no-update-notifier"
+ 		fi
+ 		if [ $mac != 'Darwin' -a "$OS." != 'trixie' ]; then
+@@ -735,7 +748,7 @@
+ 				if [[ $arch == a* ]]; then
+ 					if [ -e /etc/dphys-swapfile ]; then
+ 						echo "increasing swap space" >>$logfile
+-						export NODE_OPTIONS="--max-old-space-size=1024"
++						export NODE_OPTIONS="--max-old-space-size=192"
+ 						echo "increasing swap space" >>$logfile
+ 						sudo dphys-swapfile swapoff
+ 						sudo sed '/SWAPSIZE=100/ c \SWAPSIZE=1024' -i /etc/dphys-swapfile
