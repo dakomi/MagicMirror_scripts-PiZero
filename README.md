@@ -44,20 +44,20 @@ This repository provides **automated installation scripts** that:
 
 **One-line automated install:**
 ```bash
-bash -c "$(curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/MagicMirror%20RPi%200%20Script%20Patches/install-magicmirror-pi-zero.sh)"
+bash -c "$(curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/install-magicmirror-pi-zero.sh)"
 ```
 
 **Or download and run locally:**
 ```bash
 git clone https://github.com/dakomi/MagicMirror_scripts-PiZero.git
-cd "MagicMirror_scripts-PiZero/MagicMirror RPi 0 Script Patches"
+cd MagicMirror_scripts-PiZero
 bash install-magicmirror-pi-zero.sh
 ```
 
 ### Upgrading Existing Installation
 
 ```bash
-bash -c "$(curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/MagicMirror%20RPi%200%20Script%20Patches/upgrade-magicmirror-pi-zero.sh)"
+bash -c "$(curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/upgrade-magicmirror-pi-zero.sh)"
 ```
 
 ---
@@ -96,7 +96,7 @@ The automated installer handles everything:
 
 1. **Download and run the installer:**
    ```bash
-   bash -c "$(curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/MagicMirror%20RPi%200%20Script%20Patches/install-magicmirror-pi-zero.sh)"
+   bash -c "$(curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/install-magicmirror-pi-zero.sh)"
    ```
 
 2. **Wait for completion (30-60 minutes on Pi Zero)**
@@ -138,7 +138,7 @@ vm.overcommit_memory=1' | sudo tee -a /etc/sysctl.conf
 curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror_scripts/master/raspberry.sh -o raspberry.sh
 
 # Download and apply patch
-curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/MagicMirror%20RPi%200%20Script%20Patches/raspberry-pi-zero.patch | patch raspberry.sh
+curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/raspberry-pi-zero.patch | patch raspberry.sh
 
 # Run installer
 bash raspberry.sh
@@ -182,7 +182,7 @@ sudo apt-get update
 sudo apt-get install -y gir1.2-webkit2-4.1 libgtk-3-dev libwebkit2gtk-4.1-dev python3-gi
 
 # Download browser script
-curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/MagicMirror%20RPi%200%20Script%20Patches/mm-browser.py -o ~/mm-browser.py
+curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/mm-browser.py -o ~/mm-browser.py
 chmod +x ~/mm-browser.py
 
 # Test browser

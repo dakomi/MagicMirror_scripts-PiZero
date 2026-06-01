@@ -14,7 +14,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TEMP_DIR=$(mktemp -d)
-PATCH_URL="https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/MagicMirror%20RPi%200%20Script%20Patches/raspberry-pi-zero.patch"
+PATCH_URL="https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/raspberry-pi-zero.patch"
 
 echo "=========================================="
 echo "MagicMirror Pi Zero W/2W Installer"

@@ -4,12 +4,12 @@
 
 ### Fresh Installation
 ```bash
-bash -c "$(curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/MagicMirror%20RPi%200%20Script%20Patches/install-magicmirror-pi-zero.sh)"
+bash -c "$(curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/install-magicmirror-pi-zero.sh)"
 ```
 
 ### Upgrade Existing
 ```bash
-bash -c "$(curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/MagicMirror%20RPi%200%20Script%20Patches/upgrade-magicmirror-pi-zero.sh)"
+bash -c "$(curl -sL https://raw.githubusercontent.com/dakomi/MagicMirror_scripts-PiZero/main/upgrade-magicmirror-pi-zero.sh)"
 ```
 
 ## Service Management
